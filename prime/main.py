@@ -8,7 +8,6 @@ def is_prime(number: int) -> bool:
          return False
    return True
 
-fileObject = open(sys.argv[1], 'r')
-fileContents = fileObject.readlines()
-for number in fileContents:
-    print(1 if is_prime(int(number)) else 0)
+with open(sys.argv[1]) as inputs:
+   for input_data in inputs:   
+      print(1 if is_prime(int(input_data)) else 0)

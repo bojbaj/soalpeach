@@ -8,7 +8,7 @@ def is_prime(number):
    if(number % 2 == 0 or number % 3 == 0):
       return False
 
-   sqrt_of_number = math.floor(math.sqrt(number)) 
+   sqrt_of_number = int(math.sqrt(number))
    for i in range(5, sqrt_of_number, 6):
       if ((number % i == 0) or (number % (i+2) == 0)):
          return False

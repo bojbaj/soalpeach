@@ -2,18 +2,15 @@ import sys
 import math
 
 def is_prime(number):
-   if(number < 2):
-      return False
+   if(number <= 3):
+      return number == 2 or number == 3
 
-   if(number == 2):
-      return True
-
-   if(number % 2 == 0):
+   if(number % 2 == 0 or number % 3 == 0):
       return False
 
    sqrt_of_number = math.floor(math.sqrt(number)) 
-   for i in range(3, sqrt_of_number + 1, 2):
-      if (number % i == 0):
+   for i in range(5, sqrt_of_number, 6):
+      if ((number % i == 0) or (number % (i+2) == 0)):
          return False
    return True
 

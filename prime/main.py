@@ -1,7 +1,6 @@
-import sys
-import math
+import sys, math
 
-def is_prime(number):
+def is_prime(number: int) -> bool:
    if(number <= 3):
       return number == 2 or number == 3
 
@@ -12,8 +11,10 @@ def is_prime(number):
    for i in range(5, sqrt_of_number, 6):
       if ((number % i == 0) or (number % (i+2) == 0)):
          return False
-   return True
+   else:
+      return True
 
-with open(sys.argv[1]) as inputs:
-   for input_data in inputs:         
+file_path = sys.argv[1]
+with open(file_path) as inputs:
+   for input_data in inputs:      
       print(1 if is_prime(int(input_data)) else 0)

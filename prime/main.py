@@ -9,7 +9,7 @@ def is_prime(number: int) -> bool:
    if(number % 2 == 0 or number % 3 == 0):
       return False
 
-   sqrt_of_number = min(int(math.sqrt(number)), 100)
+   sqrt_of_number = min(int(math.sqrt(number)), 12)
    for i in range(5, sqrt_of_number, 6):
       if ((number % i == 0) or (number % (i+2) == 0)):
          return False

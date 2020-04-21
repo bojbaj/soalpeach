@@ -2,6 +2,7 @@ import sys, math
 # import time
 # start_time = time.time()
 
+result = []
 def is_prime(number: int) -> bool:
    if(number <= 3):
       return number == 2 or number == 3
@@ -19,6 +20,8 @@ def is_prime(number: int) -> bool:
 file_path = sys.argv[1]
 with open(file_path) as inputs:
    for input_data in inputs:   
-      print(1 if is_prime(int(input_data)) else 0)
+      result.append(1 if is_prime(int(input_data)) else 0)
+      # print(1 if is_prime(int(input_data)) else 0)
 
+print('\n'.join(map(str, result))) 
 # print("--- %s seconds ---" % (time.time() - start_time))

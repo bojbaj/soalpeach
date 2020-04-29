@@ -1,11 +1,6 @@
 namespace CountMe.Helpers
 {
-    public interface IDb
-    {
-        int GetSumOfNumbers();
-        int SetNewNumber(int input_number);
-    }
-    public class Db : IDb
+    public class Db
     {
         private static int SumOfNumbers = 0;
 

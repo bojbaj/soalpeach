@@ -32,12 +32,13 @@ namespace CountMe
                 {
                     int input = Convert.ToInt32(new System.IO.StreamReader(context.Request.Body).ReadToEnd());
                     db.SetNewNumber(input);
-                    await context.Response.WriteAsync("");
-                    //    await context.Response.WriteAsync();
+                    await context.Response.CompleteAsync();
+                    // await context.Response.WriteAsync(db.SetNewNumber(input).ToString());
                 });
                 endpoints.MapGet("/count", async context =>
                 {
                     await context.Response.WriteAsync(db.GetSumOfNumbers().ToString());
+                    await context.Response.CompleteAsync();
                 });
             });
         }

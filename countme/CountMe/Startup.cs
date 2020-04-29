@@ -24,11 +24,7 @@ namespace CountMe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDb, Db>();
-            services.AddControllers(opt =>
-            {
-                opt.InputFormatters.Clear();
-                opt.InputFormatters.Add(new PlainTextInputFormatter());
-            });
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using CountMe.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CountMe.Controllers
 {
     [ApiController]
-    [Route("/")]
     public class CountController : ControllerBase
     {
         private readonly IDb _db;
@@ -13,14 +15,17 @@ namespace CountMe.Controllers
         {
             _db = db;
         }
-        
+
         [HttpPost]
-        public Task<int> Post([FromBody] int input_number)
-        {            
-            return Task.FromResult(_db.SetNewNumber(input_number));
+        [Route("/")]
+        public Task<int> Post()
+        {
+            int input_number = Convert.ToInt32(Request.Form.Keys.First());
+            return Task.FromResult(_db.SetNewNumber(Convert.ToInt32(input_number)));
         }
 
-        [HttpGet("Count")]
+        [HttpGet]
+        [Route("/count")]
         public Task<int> Get()
         {
             return Task.FromResult(_db.GetSumOfNumbers());

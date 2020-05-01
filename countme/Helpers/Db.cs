@@ -1,15 +1,21 @@
+using System.Threading.Tasks;
+
 namespace CountMe.Helpers
 {
     public class Db
     {
+        public Db()
+        {
+            SetNewNumber(0);
+        }
         private static int SumOfNumbers = 0;
 
-        public int GetSumOfNumbers()
+        public Task<int> GetSumOfNumbers()
         {
-            return SumOfNumbers;
+            return Task.FromResult(SumOfNumbers);
         }
 
-        public int SetNewNumber(int input_number)
+        public Task<int> SetNewNumber(int input_number)
         {
             SumOfNumbers += input_number;
             return GetSumOfNumbers();

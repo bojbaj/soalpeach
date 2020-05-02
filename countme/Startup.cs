@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -25,30 +23,30 @@ namespace CountMe
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            decimal SumOfNumbers = 0;
+            int SumOfNumbers = 0;
             object postObject = new object();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapPost("/", async context =>
                 {
-                    decimal decInput = 0;
                     using (System.IO.StreamReader sr = new System.IO.StreamReader(context.Request.Body))
                     {
                         string strInput = await (sr.ReadToEndAsync());
-                        decInput = Convert.ToDecimal(strInput);
+                        int intInput = Convert.ToInt32(strInput);
+                        // System.Threading.Interlocked.Add(ref SumOfNumbers, intInput);
+                        lock (postObject)
+                        {
+                            SumOfNumbers = SumOfNumbers + intInput;
+                        }
+                        await context.Response.CompleteAsync();
                     }
-                    lock (postObject)
-                    {
-                        SumOfNumbers = SumOfNumbers + decInput;
-                    }
-                    await context.Response.CompleteAsync();
                 });
 
                 endpoints.MapGet("/count", async context =>
                 {
                     await context.Response.WriteAsync(SumOfNumbers.ToString());
-                    await context.Response.CompleteAsync();                    
+                    await context.Response.CompleteAsync();
                 });
 
                 endpoints.MapGet("/reset", async context =>

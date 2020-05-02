@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,34 +25,34 @@ namespace CountMe
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            bool reultGetRequested = false;
             decimal SumOfNumbers = 0;
+            object postObject = new object();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapPost("/", async context =>
                 {
-                    if (reultGetRequested)
-                    {
-                        throw new AggregateException("Request Order Is Wrong");
-                    }
-
+                    decimal decInput = 0;
                     using (System.IO.StreamReader sr = new System.IO.StreamReader(context.Request.Body))
                     {
                         string strInput = await (sr.ReadToEndAsync());
-                        SumOfNumbers += Convert.ToDecimal(strInput);
+                        decInput = Convert.ToDecimal(strInput);
                     }
+                    lock (postObject)
+                    {
+                        SumOfNumbers = SumOfNumbers + decInput;
+                    }
+                    await context.Response.CompleteAsync();
                 });
 
                 endpoints.MapGet("/count", async context =>
                 {
-                    reultGetRequested = true;
                     await context.Response.WriteAsync(SumOfNumbers.ToString());
+                    await context.Response.CompleteAsync();                    
                 });
 
                 endpoints.MapGet("/reset", async context =>
                 {
-                    reultGetRequested = false;
                     SumOfNumbers = 0;
                     await context.Response.CompleteAsync();
                 });

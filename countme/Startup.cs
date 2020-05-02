@@ -23,7 +23,7 @@ namespace CountMe
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            int SumOfNumbers = 0;
+            decimal SumOfNumbers = 0;
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -32,7 +32,7 @@ namespace CountMe
                     using (System.IO.StreamReader sr = new System.IO.StreamReader(context.Request.Body))
                     {
                         string strInput = await (sr.ReadToEndAsync());
-                        SumOfNumbers += Convert.ToInt32(strInput);
+                        SumOfNumbers += Convert.ToDecimal(strInput);
                     }
                 });
                 endpoints.MapGet("/count", async context =>

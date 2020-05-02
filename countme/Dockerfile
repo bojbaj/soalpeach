@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["CountMe.csproj", "./"]
 RUN dotnet restore "./CountMe.csproj"
-COPY ./CountMe/ .
+COPY . .
 WORKDIR "/src/."
 RUN dotnet build "CountMe.csproj" -c Release -o /app/build
 

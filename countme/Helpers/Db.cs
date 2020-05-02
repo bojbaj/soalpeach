@@ -8,7 +8,7 @@ namespace CountMe.Helpers
         {
             SetNewNumber(0);
         }
-        private static int SumOfNumbers = 0;
+        private int SumOfNumbers = 0;
 
         public Task<int> GetSumOfNumbers()
         {

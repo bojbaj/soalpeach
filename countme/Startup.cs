@@ -10,8 +10,6 @@ namespace CountMe
 {
     public class Startup
     {
-        private static Db db = new Db();
-        private static System.IO.StreamReader sr = null;
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<KestrelServerOptions>(options =>
@@ -26,6 +24,9 @@ namespace CountMe
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            int SumOfNumbers = 0;
+            Db db = new Db();
+            System.IO.StreamReader sr = null;
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -33,14 +34,15 @@ namespace CountMe
                 {
                     sr = new System.IO.StreamReader(context.Request.Body);
                     string strInput = await (sr.ReadToEndAsync());
-                    int input = Convert.ToInt32(strInput);
-                    await db.SetNewNumber(input);
+                    // int input = Convert.ToInt32(strInput);                    
+                    // await db.SetNewNumber(input);
+                    SumOfNumbers += Convert.ToInt32(strInput);
                     await context.Response.CompleteAsync();
                 });
                 endpoints.MapGet("/count", async context =>
                 {
-                    string result = (await db.GetSumOfNumbers()).ToString();
-                    await context.Response.WriteAsync(result);
+                    // string result = (await db.GetSumOfNumbers()).ToString();
+                    await context.Response.WriteAsync(SumOfNumbers.ToString());
                     await context.Response.CompleteAsync();
                 });
             });

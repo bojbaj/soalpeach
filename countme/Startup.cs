@@ -24,7 +24,7 @@ namespace CountMe
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             int SumOfNumbers = 0;
-            object postObject = new object();
+            // object postObject = new object();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -34,11 +34,11 @@ namespace CountMe
                     {
                         string strInput = await (sr.ReadToEndAsync());
                         int intInput = Convert.ToInt32(strInput);
-                        // System.Threading.Interlocked.Add(ref SumOfNumbers, intInput);
-                        lock (postObject)
-                        {
-                            SumOfNumbers = SumOfNumbers + intInput;
-                        }
+                        System.Threading.Interlocked.Add(ref SumOfNumbers, intInput);
+                        // lock (postObject)
+                        // {
+                        //     SumOfNumbers = SumOfNumbers + intInput;
+                        // }
                         await context.Response.CompleteAsync();
                     }
                 });
